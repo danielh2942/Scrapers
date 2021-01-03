@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.common.action_chains import ActionChains
 from datetime import datetime
 from PIL import Image
 from io import BytesIO
@@ -59,7 +60,11 @@ def scrape_images(input, url, driver, quantity):
             time.sleep(5)
             # n3VNCb
             # //body/div[2]/c-wiz/div[3]/div[2]/div[3]/div/div/div[3]/div[2]/c-wiz/div[1]/div[1]/div/div[2]/a/img
-            img = driver.find_element_by_xpath("//body/div[2]/c-wiz/.//img[contains(@class, 'n3VNCb')]").get_attribute("src")
+            try:
+                img = driver.find_element_by_xpath("//body/div[2]/c-wiz/.//div[contains(@class, 'tvh9oe BIB1wf')]/.//img[contains(@class, 'n3VNCb')]").get_attribute("src")
+            except Exception as b:
+                print("Could not find HQ image Error: " % (str(b)))
+                img = driver.find_element_by_xpath("//body/div[2]/c-wiz/.//img[contains(@class, 'n3VNCb')]").get_attribute("src")
             save_img(input, img, j)
     except Exception as e:
         print("Could not scrape")
